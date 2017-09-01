@@ -1,6 +1,0 @@
-{
-    "name": "3rd_lib_demo",
-    "dependencies": {
-        "jsonfile": "3.0.1"
-    }
-}
