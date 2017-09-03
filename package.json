@@ -1,0 +1,6 @@
+{
+    "name": "vueWaterFall",
+    "dependencies": {
+        "vue-waterfall": "^1.0.6",
+    }
+}
