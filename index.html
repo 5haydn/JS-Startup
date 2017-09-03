@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="./public/style.css">
   <script src="./public/vue.min.js"></script>
   <script src="./public/dataEngine.js"></script>
-  <script src="./node_modules/vue-waterfall/lib/vue-waterfall.min.js"></script>
+  <script src="./public/vue-waterfall.min.js"></script>
   <!-- <script src="http://app.moptym.com/cdn/vue-waterfall/vue-waterfall.min.js"></script> -->
 </head>
 
@@ -21,7 +21,7 @@
     <div class="jumbotron">
       <h1 class="title">JavaScript编程入门</h1>
       <p>授课老师：徐高阳</p>
-      <h3 class="panel-title">我的心里话</h3>      
+      <h3 class="panel-title">我的心里话</h3>
     </div>
 
     <!-- <div class="container">
@@ -48,20 +48,23 @@
       <waterfall-slot
         v-for="(item, index) in wordsList"
         :width="200"
-        :height="200"
+        :height="280"
         :order="index"
         :key="item.id"
       >
-        <!--
-          your component
-        -->
-        <div class="media">
-            <div class="media-left">
-              <a href="#">
+        <div class="words-pannel">
+            <div class="media">
+              <div class="media-top">
                   <img class="media-object avatar" v-bind:src="item.avatar" alt="...">
-                </a>
+              </div>
+
+              <div class="media-body">
+                <h4 class="media-heading" align="center" style = "margin:10%">
+                  {{ item.name }}
+                </h4>
+                  <!-- {{ item.words }} -->
+              </div>
             </div>
-        </div>
 
       </waterfall-slot>
     </waterfall>
