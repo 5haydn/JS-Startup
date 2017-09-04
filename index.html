@@ -43,7 +43,7 @@
       </div>
     </div> -->
 
-    <waterfall :line-gap="200" :watch="wordsList">
+    <waterfall :line-gap="200" :watch="wordsList" style="margin:5%">
       <!-- each component is wrapped by a waterfall slot -->
       <waterfall-slot
         v-for="(item, index) in wordsList"
@@ -59,7 +59,7 @@
               </div>
 
               <div class="media-body">
-                <h4 class="media-heading" align="center" style = "margin:10%">
+                <h4 class="media-heading" align="center" style = "margin:10%" align="center">
                   {{ item.name }}
                 </h4>
                   <!-- {{ item.words }} -->
