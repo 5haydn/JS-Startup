@@ -11,10 +11,11 @@
   <link rel="stylesheet" href="./public/style.css">
   <link rel="stylesheet" href="./common/css/style.css">
 
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="./public/vue.min.js"></script>
   <script src="./public/dataEngine.js"></script>
   <script src="./public/vue-waterfall.min.js"></script>
-  <!-- <script src="http://app.moptym.com/cdn/vue-waterfall/vue-waterfall.min.js"></script> -->
+
 
   <style>
       .item-move {
@@ -98,15 +99,37 @@
 </html>
 <script>
 
-
-  new Vue({                   // 初始化Vue
+  var vm = new Vue({                   // 初始化Vue
     el: '#app',               // #app 和html中div#id的 app 对应
     data: {
-      wordsList: fullWordList // 全局变量fullWordsList可以在html使用
+      wordsList: [] 
     },
     components: {             // 添加 vue-waterfall 组件      
       'waterfall': Waterfall.waterfall,
       'waterfall-slot': Waterfall.waterfallSlot
     }
   });
+
+  var baseURL = 'https://js.xinshengdaxue.com/api/v1/learnJS/course/1/';
+  axios.get(baseURL + 'words')
+  .then(function(response){
+    console.log("返回结果了");
+    console.log(response);
+
+    var recervedData = response.data.words;
+    if(response.data.code === 1){
+      recervedData = response.data.words;
+    }else{
+      recervedData = fullWordList;
+    }
+    
+    // 更新一个数组
+    for(var i = 0; i < recervedData.length; i++){
+      vm.wordsList.push(recervedData[i]) ;
+    }
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+
 </script>
