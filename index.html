@@ -7,129 +7,223 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
-    
+
   <link rel="stylesheet" href="./public/style.css">
   <link rel="stylesheet" href="./common/css/style.css">
+
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="./public/bootstrap.min.js"></script>
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="./public/vue.min.js"></script>
   <script src="./public/dataEngine.js"></script>
   <script src="./public/vue-waterfall.min.js"></script>
 
-
-  <style>
-      .item-move {
-        transition: all .5s cubic-bezier(.55,0,.1,1);
-        -webkit-transition: all .5s cubic-bezier(.55,0,.1,1);
-      }
-    </style>
-
 </head>
 
 <body>
+  <nav class="navbar navbar-default nav-fixed-top">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+          aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+        <a class="navbar-brand" href="#">
+              <img alt="Brand" src="https://o4a7cbihz.qnssl.com/picture/57140c0c-4ffa-4dde-9757-570b53f96796">
+            </a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="https://js.xinshengdaxue.com/" target="_blank">首页 <span class="sr-only">(current)</span></a></li>
+          <li><a href="https://js.xinshengdaxue.com/api" target="_blank">API <span class="sr-only">(current)</span></a></li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+
+  <div class="main-header" id="content">
+    <div class="container">
+      <h1>JavaScript编程入门</h1>
+    </div>
+  </div>
+
   <div id="app" class="container">
 
-    <div class="jumbotron">
-      <h1 class="title">JavaScript编程入门</h1>
-      <p>授课老师：徐高阳</p>
-      <h3 class="panel-title">我的心里话</h3>
-    </div>
+    <ol class="breadcrumb">
+      <li><a href="https://js.xinshengdaxue.com/" target="_blank">主页</a></li>
+    </ol>
 
-    <!-- <div class="container">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">我的心里话</h3>
-        </div>
-        <div class="panel-body">
-          <div class="words-pannel" v-for="item in wordsList">
-            <div class="media">
-              <div class="media-left">
-                <a href="#">
-                    <img class="media-object avatar" v-bind:src="item.avatar" alt="...">
-                  </a>
+
+    <div class="row">
+      <div class="col-md-8">
+
+        <waterfall :line-gap="200" :min-line-gap="100" ref="waterfall" :max-line-gap="220" :watch="wordsList" :single-max-width="300"
+          style="margin-left:5px">
+          <!-- each component is wrapped by a waterfall slot -->
+          <waterfall-slot v-for="(item, index) in wordsList" :width="200" :height="280" :order="index" :key="item.id" move-class="item-move">
+            <div class="img-thumbnail">
+              <div class="media">
+                <img class="media-object avatar" v-bind:src="item.avatar" alt="...">
+                <div class="media-body">
+                  <h4 class="media-heading" align="center" style="margin:10%" align="center">
+                    {{ item.name }}
+                  </h4>
+                  <!-- {{ item.words }} -->
+                </div>
               </div>
+            </div>
+          </waterfall-slot>
+        </waterfall>
+      </div>      
+
+      <div class="col-md-3">
+
+
+      <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">小命令</h3>
+          </div>
+          <div class="panel-body">        
+          <code class="col-md-8">git status</code>
+          <kbd>cd</kbd>
+          </div>
+      </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">说说心里话</h3>
+            </div>
+            <div class="panel-body">
+              <form>
+                <div class="form-group">
+                  <label for="name">名字</label>
+                  <input v-model="nameString" class="form-control" placeholder="请输入你的姓名">
+                </div>
+                <div class="form-group">
+                  <label for="account">新大账号</label>
+                  <input v-model="accountString" class="form-control" placeholder="请输入你的新大账号（注册手机号码或邮箱）">
+                </div>
+                <div class="form-group">
+                  <label for="content">想说的话</label>
+                  <input v-model="contentString" class="form-control" placeholder="请输入你想对徐老师说的话">
+                </div>
+                <div class="btn btn-primary" v-on:click="sendData">提交发送</div>
+              </form>
             </div>
           </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">PPT</h3>
+          </div>
+          <div class="panel-body">
+
+            <li class="list-group-item list-group-item-x">
+              <a href="https://github.com/xugy0926/getting-started-with-javascript/blob/master/ppt/JavaScript%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8_%E7%AC%AC%E4%B8%80%E8%8A%82.pdf">
+                      第一节课PPT
+                    </a>
+            </li>
+
+            <li class="list-group-item list-group-item-x">
+              <a href="https://github.com/xugy0926/getting-started-with-javascript/blob/master/ppt/JavaScript%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8_%E7%AC%AC%E4%BA%8C%E8%8A%82.pdf">
+                      第二节课PPT
+                    </a>
+            </li>
+
+            <li class="list-group-item list-group-item-x">
+              <a href="https://github.com/xugy0926/getting-started-with-javascript/blob/master/ppt/JavaScript%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8_%E7%AC%AC%E4%B8%89%E8%8A%82.pdf">
+                      第三节课PPT
+                    </a>
+            </li>
+
+            <li class="list-group-item list-group-item-x">
+              <a href="https://github.com/xugy0926/getting-started-with-javascript/blob/master/ppt/JavaScript%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8_%E7%AC%AC%E5%9B%9B%E8%AF%BE.pdf">
+                      第四节课PPT
+                    </a>
+            </li>
+
+            <li class="list-group-item list-group-item-x">
+              <a href="https://github.com/xugy0926/getting-started-with-javascript/blob/master/ppt/JavaScript%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8_%E7%AC%AC%E4%BA%94%E8%8A%82.pdf">
+                      第五节课PPT
+                    </a>
+            </li>
+
+            <li class="list-group-item list-group-item-x">
+              <a href="https://github.com/xugy0926/getting-started-with-javascript/blob/master/ppt/JavaScript%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8_%E7%AC%AC%E5%85%AD%E8%AF%BE.pdf">
+                      第六节课PPT
+                    </a>
+            </li>
+
+          </div>
         </div>
+
+
       </div>
-    </div> -->
-
-    <waterfall 
-      :line-gap="200"
-      :min-line-gap="100" 
-      ref="waterfall"
-      :max-line-gap="220" 
-      :watch="wordsList"  
-      :single-max-width="300"
-      style="margin-left:5px"
-    ><!-- @reflowed="reflowed"  这个属性用不了 2017.9.4 by haydn-->
-
-      <!-- each component is wrapped by a waterfall slot -->   
-      <waterfall-slot
-        v-for="(item, index) in wordsList"
-        :width="200"
-        :height="280"
-        :order="index"
-        :key="item.id"
-        move-class="item-move"
-      >
-        <div class="img-thumbnail">
-            <div class="media">
-              <div class="media-top">
-                  <img class="media-object avatar" v-bind:src="item.avatar" alt="...">
-              </div>
-
-              <div class="media-body">
-                <h4 class="media-heading" align="center" style = "margin:10%" align="center">
-                  {{ item.name }}
-                </h4>
-                  <!-- {{ item.words }} -->
-              </div>
-            </div>
-
-      </waterfall-slot>
-    </waterfall>
+    </div>
 
   </div>
 
+  </div>
 
+  <div class="footer">
 
+    <p class="center"> 爱你 ❤️</p>
+    </div>
 </body>
 
 </html>
 <script>
-
-  var vm = new Vue({                   // 初始化Vue
-    el: '#app',               // #app 和html中div#id的 app 对应
+  var vm = new Vue({ // 初始化Vue
+    el: '#app', // #app 和html中div#id的 app 对应
     data: {
-      wordsList: [] 
+      wordsList: [], // fullWordList
+      nameString: '',
+      accountString: '',
+      contentString: ''
     },
-    components: {             // 添加 vue-waterfall 组件      
+    components: { // 添加 vue-waterfall 组件      
       'waterfall': Waterfall.waterfall,
       'waterfall-slot': Waterfall.waterfallSlot
+    },
+    methods: {
+      sendData: function () {
+        axios.post('https://js.xinshengdaxue.com/api/v1/learnJS/sayToMe', {
+            name: vm.nameString, // 拿到表单的name字段
+            account: vm.accountString, // 拿到表单的account字段
+            content: vm.contentString // 拿到表单的content字段
+          })
+          .then(function (response) {
+            console.log(response);
+            if (response.data.code === 1) {
+              alert('成功发送');
+            } else {
+              alert('发送失败, 原因: ' + response.data.message);
+            }
+          })
+          .catch(function (error) {
+            console.log(error); // 
+          });
+      }
     }
   });
 
   var baseURL = 'https://js.xinshengdaxue.com/api/v1/learnJS/course/1/';
   axios.get(baseURL + 'words')
-  .then(function(response){
-    console.log("返回结果了");
-    console.log(response);
-
-    var recervedData = response.data.words;
-    if(response.data.code === 1){
-      recervedData = response.data.words;
-    }else{
-      recervedData = fullWordList;
-    }
-    
-    // 更新一个数组
-    for(var i = 0; i < recervedData.length; i++){
-      vm.wordsList.push(recervedData[i]) ;
-    }
-  })
-  .catch(function(err){
-    console.log(err);
-  });
-
+    .then(function (response) {
+      if (response.data.code === 1) {
+        vm.wordsList = response.data.words;
+      }
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
 </script>
