@@ -56,34 +56,34 @@
     </div>
   </div>
 
-  <div id="app" class="container">
-
-    <ol class="breadcrumb">
-      <li><a href="https://js.xinshengdaxue.com/" target="_blank">主页</a></li>
-    </ol>
+  <div id="app">
 
 
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-1">
+        </div>
+      <div class="col-md-7">
 
-        <waterfall :line-gap="200" :min-line-gap="100" ref="waterfall" :max-line-gap="220" :watch="wordsList" :single-max-width="300"
-          style="margin-left:5px">
-          <!-- each component is wrapped by a waterfall slot -->
-          <waterfall-slot v-for="(item, index) in wordsList" :width="200" :height="280" :order="index" :key="item.id" move-class="item-move">
-            <div class="img-thumbnail">
-              <div class="media">
-                <img class="media-object avatar" v-bind:src="item.avatar" alt="...">
-                <div class="media-body">
-                  <h4 class="media-heading" align="center" style="margin:10%" align="center">
-                    {{ item.name }}
-                  </h4>
-                  <!-- {{ item.words }} -->
-                </div>
+          <ol class="breadcrumb">
+              <li><a href="https://js.xinshengdaxue.com/" target="_blank">主页</a></li>
+            </ol>
+
+              <div id="columns">
+                  <div v-for="item in wordsList">
+                      <figure>
+                          <div>
+                              {{item.words}}
+                          </div>
+                          <hr>
+                          <div>
+                              {{ item.name }}
+                              <img class="ui avatar image" v-bind:src="item.avatar" alt="...">
+                          </div>
+                      </figure>
+
+                  </div>
               </div>
-            </div>
-          </waterfall-slot>
-        </waterfall>
-      </div>      
+        </div>
 
       <div class="col-md-3">
 
